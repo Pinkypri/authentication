@@ -23,12 +23,12 @@ router.post("/signup",async(req,res)=>{
             service:"gmail",
             secure:true,
             auth:{
-                user:"demo20pri@gmail.com",
-                pass:"Demo1245",
+                user:process.env.MAIL,
+                pass:process.env.PASSWORD,
              }
         })
         let info= await transport.sendMail({
-            from:"demo20pri@gmail.com",
+            from:process.env.MAIL,
             to:req.body.email,
             subject:"Verification E-mail",
             html:`
@@ -39,9 +39,9 @@ router.post("/signup",async(req,res)=>{
             </div>`
         });
         if(info){
-            console.log(info);
+            res.json({msg:"Account Created sucessfully.Check your inbox and verify your account"});
         }
-        res.json({msg:"Account Created sucessfully.Check your inbox and verify your account"});
+        
     } catch (error) {
         res.json(error);
     }
@@ -105,8 +105,8 @@ router.post("/forgot",async(req,res)=>{
             service:"gmail",
             secure:true,
             auth:{
-                user:"demo20pri@gmail.com",
-                pass:"Demo1245",
+                user:process.env.MAIL,
+                pass:process.env.PASSWORD,
              }
         })
         let info= await transporter.sendMail({
